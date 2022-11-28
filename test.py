@@ -14,17 +14,17 @@ for j in range(1,11):
     subject = 'Domain1_csv/Subject'+str(j)
     print(subject)
     for i in range(1, 11):
-        print(subject + '-2-'+ str(i) +'.csv')
-        filename = subject + '-2-' + str(i) +'.csv'
+        print(subject + '-0-'+ str(i) +'.csv')
+        filename = subject + '-0-' + str(i) +'.csv'
         df = pd.read_csv(filename)
         plt.plot(df.iloc[:, 0], df.iloc[:, 1])
 plt.show()
 #plt.savefig('un.png')
 
-
+'''
 ##Matrix dtw
 
-for j in range(1,4):
+for j in range(1, 11):
     subject = 'Domain1_csv/Subject'+str(j)
     print(subject)
     for i in range(1, 11):
@@ -40,8 +40,6 @@ for j in range(1,4):
         plt.plot(path[0], path[1], 'w')
 plt.show()
 
-
-### Attention 4-0-10 !! separation en ; -> changer en separation , 
 for j in range(1,5):
     subject = 'Domain1_csv/Subject'+str(j)
     print(subject)
@@ -51,7 +49,7 @@ for j in range(1,5):
         df = pd.read_csv(filename)
         x = df.iloc[:, 0]
         y = df.iloc[:, 1]
-'''
+
 df = pd.read_csv('Domain1_csv/Subject4-0-10.csv')
 
 text = open("Domain1_csv/Subject4-0-10.csv", "r")
@@ -62,11 +60,5 @@ text = ''.join([i for i in text])
 
 # search and replace the contents
 text = text.replace(";", ",")
-
-df = pd.read_csv('Subject4_0_10_test.csv')
-
-for i in range(66):
-    for i in df.iloc(i,3):
-        
 '''
 
