@@ -1,1 +1,52 @@
 ### fdp jupyter###
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from dtw import dtw
+
+
+## show all number of each subject
+
+
+for j in range(1,11):
+    subject = 'Domain1_csv/Subject'+str(j)
+    print(subject)
+    for i in range(1, 11):
+        print(subject + '-2-'+ str(i) +'.csv')
+        filename = subject + '-2-' + str(i) +'.csv'
+        df = pd.read_csv(filename)
+        plt.plot(df.iloc[:, 0], df.iloc[:, 1])
+plt.show()
+#plt.savefig('un.png')
+
+
+##Matrix dtw
+
+for j in range(1,4):
+    subject = 'Domain1_csv/Subject'+str(j)
+    print(subject)
+    for i in range(1, 11):
+        print(subject + '-0-' + str(i) +'.csv')
+        filename = subject + '-0-' + str(i) +'.csv'
+        df = pd.read_csv(filename)
+        x = df.iloc[:, 0]
+        y = df.iloc[:, 1]
+        manhattan_distance = lambda x, y: np.abs(x - y)
+        d, cost_matrix, acc_cost_matrix, path = dtw(x, y, dist=manhattan_distance)
+
+        plt.imshow(acc_cost_matrix.T, origin='lower', cmap='gray', interpolation='nearest')
+        plt.plot(path[0], path[1], 'w')
+plt.show()
+
+
+### Attention 4-0-10 !! separation en ; -> changer en separation , 
+for j in range(1,5):
+    subject = 'Domain1_csv/Subject'+str(j)
+    print(subject)
+    for i in range(1, 11):
+        print(subject + '-0-' + str(i) +'.csv')
+        filename = subject + '-0-' + str(i) + '.csv'
+        df = pd.read_csv(filename)
+        x = df.iloc[:, 0]
+        y = df.iloc[:, 1]
