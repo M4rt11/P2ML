@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from dtw import dtw
+import os
 
 
 ## show all number of each subject
@@ -50,3 +51,22 @@ for j in range(1,5):
         df = pd.read_csv(filename)
         x = df.iloc[:, 0]
         y = df.iloc[:, 1]
+'''
+df = pd.read_csv('Domain1_csv/Subject4-0-10.csv')
+
+text = open("Domain1_csv/Subject4-0-10.csv", "r")
+
+# join() method combines all contents of
+# csvfile.csv and formed as a string
+text = ''.join([i for i in text])
+
+# search and replace the contents
+text = text.replace(";", ",")
+
+df = pd.read_csv('Subject4_0_10_test.csv')
+
+for i in range(66):
+    for i in df.iloc(i,3):
+        
+'''
+
