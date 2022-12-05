@@ -118,19 +118,15 @@ for subject in range(1,11):
 coord = pd.Series(coord) #on dit que les coord sont égales à un dataframe
 data["Coord"] = coord #on crée un nouvel index coord dans la matrice data, on rajoute une colonne
 
-print(type(coord))
 
-df_user = data[data["UserID"]==4]
-print(df_user)
 #TEST
 df_user = data[data["UserID"]==4]  #on dit qu'on sort le user 4
-coord_digit = df_user[df_user['Digit']==1]
-print(coord_digit)
+coord_digit = df_user[df_user['Digit'] ==1]
 #print(coord_digit['Coord'])
 #print(coord_digit['Coord'].iloc[1])
 
 
-print(dtw(coord_digit['Coord'].iloc[1],coord_digit['Coord'].iloc[9]))
+#print(dtw(coord_digit['Coord'].iloc[1],coord_digit['Coord'].iloc[9]))
 
 
 ###Cross validation ###
@@ -138,51 +134,32 @@ k = 15
 i = 0
 pres = 0
 
-
-for subject in range(1,11):
+tik = time.perf_counter()
+for subject in range(1, 11):
     Train = data[data['UserID'] != subject]
     Test = data[data['UserID'] == subject]
 
-    tik = time.perf_counter()
-    for test in range(0,100):
-        signal = Test.iloc[test, 2]
+
+    for test in range(0, 100):
+        signal = Test.iloc[test, 2] #prend les coord des 100 répet du user 3 par exemple
         #print(signal)
-        result_cost = []
-        result_digit = []
+        result = [] #résultat des coûts min
+        result_d = [] #digit associé au coût min
         for train in range(0,900):
-            r = Train.iloc[train,2]
-            result_cost.append(dtw(signal, r))
-            result_digit.append(Train.iloc[train, 1])
+            r = Train.iloc[train,2] #même chose que signal mais pour train
+            result.append(dtw(signal, r)) #on compare les digits un par un au 900 autres digit, il calcul le dtw et l'ajoute à la liste
+            result_d.append(Train.iloc[train, 1]) #ajoute le digit associé au coût
 
-Train = data[data['UserID'] != 5]
-Test = data[data['UserID'] == 5]
-
-tik = time.perf_counter()
-for te in range(0,100):
-    signal = Test.iloc[te, 2] #prend les coord des 100 répet du user 3 par exemple
-    #print(signal)
-    result = [] #résultat des coûts min
-    result_d = [] #digit associé au coût min
-    for tr in range(0,900):
-        r = Train.iloc[tr,2] #même chose que signal mais pour train
-        result.append(dtw(signal, r)) #on compare les digits un par un au 900 autres digit, il calcul le dtw et l'ajoute à la liste
-        result_d.append(Train.iloc[tr, 1]) #ajoute le digit associé au coût
-
-    order = np.array(result_d)[np.argsort(np.array(result))][:k] #classer les coûts de 0 à 1
-    predicted = st.mode(order)[0]
-    if te % 10 ==0:
-        print(f'True = {Test.iloc[te, 1]}  - Pred = {predicted}')
-
-        order = np.array(result_digit)[np.argsort(np.array(result_cost))][:k]
+        order = np.array(result_d)[np.argsort(np.array(result))][:k] #classer les coûts de 0 à 1
         predicted = st.mode(order)[0]
-        i += 1
-        #if te % 10 ==0
+        #if te % 10 == 0:
         print(f'True = {Test.iloc[test, 1]}  - Pred = {predicted}')
+        i += 1
         if predicted == Test.iloc[test, 1]:
             pres += 1
 
 
-print("accuracy :",pres/i)
+print("accuracy :", pres/i)
 
 print(f'Time to execute : {time.perf_counter()-tik:.3f} sec.')
 
