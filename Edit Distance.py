@@ -15,12 +15,11 @@ def standarization(data):
     return data
 
 #CREATION DU TABLEAU
-data = np.zeros((1000, 2))
 
   # On crée une matrice de 0 (2 colonnes et 1000 lignes)
 data = np.zeros((1000, 2)) # (Colonnes : 1 = subject, 2 = number qu'il fait)
 for i in range(1000):
-    data[i] = [ int((i) // 100 + 1), int((i) // 10) % 10]
+    data[i] = [int((i) // 100 + 1), int((i) // 10) % 10]
 data = pd.DataFrame(data, columns=['UserID', 'Digit'])
 
  #On crée une liste de coordonnées x et y pour chaque répétition, liste coord [[x],[y]]
