@@ -20,7 +20,7 @@ def standarization(data):
     return data
 
     ## GRAPH Show number 5 of all subjects
-
+"""
 for j in range(1,11):
     subject = 'Domain1_csv/Subject'+str(j)
     print(subject)
@@ -35,7 +35,7 @@ plt.show()
 for j in range(1,11):
     subject = 'Domain1_csv/Subject'+str(j)
     print(subject)
-    for i in range(1, 5):
+    for i in range(1, 10):
         print(subject + '-3-' + str(i) + '.csv')
         filename = subject + '-3-' + str(i) + '.csv'
         df = pd.read_csv(filename)
@@ -48,7 +48,7 @@ for j in range(1,11):
         plt.plot(x5,y5, label='filtered, sigma=5')
         plt.grid()
     #va dans les répitions et en plus on filtre
-plt.show()
+plt.show()"""
 
 
 """
@@ -94,7 +94,6 @@ for j in range(1,11):
 
 
 
-data = np.zeros((1000, 2))
 #CREATION DU TABLEAU
   # On crée une matrice de 0 (2 colonnes et 1000 lignes)
 data = np.zeros((1000, 2)) # (Colonnes : 1 = subject, 2 = number qu'il fait)
@@ -152,11 +151,11 @@ for subject in range(1, 11):
 
         order = np.array(result_d)[np.argsort(np.array(result))][:k] #classer les coûts de 0 à 1
         predicted = st.mode(order)[0]
-        #if te % 10 == 0:
-        print(f'True = {Test.iloc[test, 1]}  - Pred = {predicted}')
-        i += 1
-        if predicted == Test.iloc[test, 1]:
-            pres += 1
+        if test % 10 == 0:
+            print(f'True = {Test.iloc[test, 1]}  - Pred = {predicted}')
+            i += 1
+            if predicted == Test.iloc[test, 1]:
+                pres += 1
 
 
 print("accuracy :", pres/i)
