@@ -1,4 +1,3 @@
-### fdp jupyter###
 
 import pandas as pd
 import numpy as np
@@ -45,7 +44,6 @@ for j in range(1,11):
         z5 = gaussian_filter1d(z, sigma=5)
         #plt.plot(x, y, 'k', label='original data')
         plt.plot(x5,y5, label='filtered, sigma=5')
-        plt.legend()
         plt.grid()
 plt.show()
 """
@@ -87,9 +85,9 @@ for j in range(1,11):
         plt.grid()
 #plt.show()
 
-
-
 """
+
+
 data = np.zeros((1000, 2))
 for i in range(1000):
     data[i] = [ int((i) // 100 + 1), int((i) // 10) % 10]
@@ -111,8 +109,12 @@ for subject in range(1,11):
 coord = pd.Series(coord)
 data["Coord"] = coord
 
+print(type(coord))
+
 df_user = data[data["UserID"]==4]
+print(df_user)
 coord_digit = df_user[df_user['Digit']==1]
+print(coord_digit)
 #print(coord_digit['Coord'])
 #print(coord_digit['Coord'].iloc[1])
 
@@ -120,34 +122,38 @@ coord_digit = df_user[df_user['Digit']==1]
 print(dtw(coord_digit['Coord'].iloc[1],coord_digit['Coord'].iloc[9]))
 
 
-
 ###Cross validation ###
 k = 15
+i = 0
+pres = 0
 
-Train = data[data['UserID'] != 3]
-Test = data[data['UserID'] == 3]
+for subject in range(1,11):
+    Train = data[data['UserID'] != subject]
+    Test = data[data['UserID'] == subject]
 
-tik = time.perf_counter()
-for te in range(0,100):
-    signal = Test.iloc[te, 2]
-    #print(signal)
-    result = []
-    result_d = []
-    for tr in range(0,900):
-        r = Train.iloc[tr,2]
-        result.append(dtw(signal, r))
-        result_d.append(Train.iloc[tr, 1])
+    tik = time.perf_counter()
+    for test in range(0,100):
+        signal = Test.iloc[test, 2]
+        #print(signal)
+        result_cost = []
+        result_digit = []
+        for train in range(0,900):
+            r = Train.iloc[train,2]
+            result_cost.append(dtw(signal, r))
+            result_digit.append(Train.iloc[train, 1])
 
-    order = np.array(result_d)[np.argsort(np.array(result))][:k]
-    predicted = st.mode(order)[0]
-    if te % 10 ==0:
-        print(f'True = {Test.iloc[te, 1]}  - Pred = {predicted}')
+        order = np.array(result_digit)[np.argsort(np.array(result_cost))][:k]
+        predicted = st.mode(order)[0]
+        i += 1
+        #if te % 10 ==0
+        print(f'True = {Test.iloc[test, 1]}  - Pred = {predicted}')
+        if predicted == Test.iloc[test, 1]:
+            pres += 1
 
 
-
+print("accuracy :",pres/i)
 
 print(f'Time to execute : {time.perf_counter()-tik:.3f} sec.')
-
 
 
 
