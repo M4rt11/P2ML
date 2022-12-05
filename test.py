@@ -1,4 +1,3 @@
-### fdp jupyter###
 
 import pandas as pd
 import numpy as np
@@ -47,7 +46,6 @@ for j in range(1,11):
         z5 = gaussian_filter1d(z, sigma=5)
         #plt.plot(x, y, 'k', label='original data')
         plt.plot(x5,y5, label='filtered, sigma=5')
-        plt.legend()
         plt.grid()
     #va dans les répitions et en plus on filtre
 plt.show()
@@ -93,6 +91,10 @@ for j in range(1,11):
 #plt.show()
 
 """
+
+
+
+data = np.zeros((1000, 2))
 #CREATION DU TABLEAU
   # On crée une matrice de 0 (2 colonnes et 1000 lignes)
 data = np.zeros((1000, 2)) # (Colonnes : 1 = subject, 2 = number qu'il fait)
@@ -116,9 +118,14 @@ for subject in range(1,11):
 coord = pd.Series(coord) #on dit que les coord sont égales à un dataframe
 data["Coord"] = coord #on crée un nouvel index coord dans la matrice data, on rajoute une colonne
 
+print(type(coord))
+
+df_user = data[data["UserID"]==4]
+print(df_user)
 #TEST
 df_user = data[data["UserID"]==4]  #on dit qu'on sort le user 4
 coord_digit = df_user[df_user['Digit']==1]
+print(coord_digit)
 #print(coord_digit['Coord'])
 #print(coord_digit['Coord'].iloc[1])
 
@@ -126,9 +133,26 @@ coord_digit = df_user[df_user['Digit']==1]
 print(dtw(coord_digit['Coord'].iloc[1],coord_digit['Coord'].iloc[9]))
 
 
-
 ###Cross validation ###
 k = 15
+i = 0
+pres = 0
+
+
+for subject in range(1,11):
+    Train = data[data['UserID'] != subject]
+    Test = data[data['UserID'] == subject]
+
+    tik = time.perf_counter()
+    for test in range(0,100):
+        signal = Test.iloc[test, 2]
+        #print(signal)
+        result_cost = []
+        result_digit = []
+        for train in range(0,900):
+            r = Train.iloc[train,2]
+            result_cost.append(dtw(signal, r))
+            result_digit.append(Train.iloc[train, 1])
 
 Train = data[data['UserID'] != 5]
 Test = data[data['UserID'] == 5]
@@ -149,11 +173,18 @@ for te in range(0,100):
     if te % 10 ==0:
         print(f'True = {Test.iloc[te, 1]}  - Pred = {predicted}')
 
+        order = np.array(result_digit)[np.argsort(np.array(result_cost))][:k]
+        predicted = st.mode(order)[0]
+        i += 1
+        #if te % 10 ==0
+        print(f'True = {Test.iloc[test, 1]}  - Pred = {predicted}')
+        if predicted == Test.iloc[test, 1]:
+            pres += 1
 
 
+print("accuracy :",pres/i)
 
 print(f'Time to execute : {time.perf_counter()-tik:.3f} sec.')
-
 
 
 
