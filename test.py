@@ -20,19 +20,35 @@ def standarization(data):
 
 ## show all number of each subject
 
-for j in range(1,5):
+for j in range(1,11):
     subject = 'Domain1_csv/Subject'+str(j)
     print(subject)
     for i in range(1, 11):
-        print(subject + '-7-' + str(i) + '.csv')
-        filename = subject + '-7-' + str(i) + '.csv'
+        print(subject + '-5-' + str(i) + '.csv')
+        filename = subject + '-5-' + str(i) + '.csv'
         df = pd.read_csv(filename)
         df = standarization(df)
-        plt.plot(df.iloc[3:, 0], df.iloc[3:, 1])
+        plt.plot(df.iloc[:, 0], df.iloc[:, 1])
 plt.show()
-#plt.savefig('un.png')
 
-
+for j in range(1,11):
+    subject = 'Domain1_csv/Subject'+str(j)
+    print(subject)
+    for i in range(1, 5):
+        print(subject + '-5-' + str(i) + '.csv')
+        filename = subject + '-5-' + str(i) + '.csv'
+        df = pd.read_csv(filename)
+        df = standarization(df)
+        x, y, z= np.array(df.iloc[3:, 0]), np.array(df.iloc[3:, 1]), np.array(df.iloc[3:, 2])
+        x5 = gaussian_filter1d(x, sigma=5)
+        y5 = gaussian_filter1d(y, sigma=5)
+        z5 = gaussian_filter1d(z, sigma=5)
+        #plt.plot(x, y, 'k', label='original data')
+        plt.plot(x5,y5, label='filtered, sigma=5')
+        plt.legend()
+        plt.grid()
+plt.show()
+"""
 ##Matrix dtw
 
 for j in range(1, 11):
@@ -51,7 +67,7 @@ for j in range(1, 11):
         plt.plot(path[0], path[1], 'w')
 #plt.show()
 
-
+###
 for j in range(1,11):
     subject = 'Domain1_csv/Subject'+str(j)
     print(subject)
@@ -69,12 +85,12 @@ for j in range(1,11):
         plt.imshow(acc_cost_matrix.T, origin='lower', cmap='gray', interpolation='nearest')
         plt.plot(path[0], path[1], 'w')
         plt.grid()
-#plt.show()"""
+#plt.show()
 
 
 
-
-"""data = np.zeros((1000, 2))
+"""
+data = np.zeros((1000, 2))
 for i in range(1000):
     data[i] = [ int((i) // 100 + 1), int((i) // 10) % 10]
 data = pd.DataFrame(data, columns=['UserID', 'Digit'])
@@ -86,7 +102,12 @@ for subject in range(1,11):
         for rep in range(1, 11):
             f_name = f"Domain1_csv/Subject{subject}-{digit}-{rep}.csv"
             df = pd.read_csv(f_name)
-            coord.append(np.array([df.iloc[:,0].to_numpy(), df.iloc[:,1].to_numpy()]))
+            standarization(df)
+            x, y, z = np.array(df.iloc[3:, 0]), np.array(df.iloc[3:, 1]), np.array(df.iloc[3:, 2])
+            x5 = gaussian_filter1d(x, sigma=5)
+            y5 = gaussian_filter1d(y, sigma=5)
+            z5 = gaussian_filter1d(z, sigma=5)
+            coord.append(np.array([x5, y5]))
 coord = pd.Series(coord)
 data["Coord"] = coord
 
@@ -100,11 +121,11 @@ print(dtw(coord_digit['Coord'].iloc[1],coord_digit['Coord'].iloc[9]))
 
 
 
-### Cross validation ###
-k = 30
+###Cross validation ###
+k = 15
 
-Train = data[data['UserID'] != 1]
-Test = data[data['UserID'] == 1]
+Train = data[data['UserID'] != 3]
+Test = data[data['UserID'] == 3]
 
 tik = time.perf_counter()
 for te in range(0,100):
@@ -126,10 +147,6 @@ for te in range(0,100):
 
 
 print(f'Time to execute : {time.perf_counter()-tik:.3f} sec.')
-
-
-
-"""
 
 
 
