@@ -33,15 +33,13 @@ coord = pd.DataFrame(coord)
 #plt.scatter(coord.iloc[:, 0], coord.iloc[ :, 1], s = 50, c='b')
 plt.show()
 
-kmeans = KMeans(init="random", n_init=10, max_iter=300, random_state=42)
-kmeans.fit(data["Coord"])
-
 ###CLUSTERING
 kmeans = KMeans(init="random", n_init=10, max_iter=300, random_state=42, n_clusters=20)
 kmeans.fit(coord.iloc[:, 0:2])
 y_kmeans = kmeans.predict(coord.iloc[:, 0:2])
-plt.scatter(coord.iloc[:, 0], coord.iloc[:,1], c=y_kmeans)
+plt.scatter(coord.iloc[:, 0], coord.iloc[:,1], c=y_kmeans, hue='label')
 centers = kmeans.cluster_centers_
 print(kmeans.cluster_centers_)
+print(kmeans.labels_)
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
