@@ -24,9 +24,10 @@ for subject in range(1,11):
             df = pd.read_csv(f_name)
             standarization(df)
             #print(df)
+            numb = str(subject) + str(digit) + str(rep)
             for coord_df in range(len(df)):
-                coord.append([df.iloc[coord_df,0], df.iloc[coord_df,1]])
-            #print(coord)
+                coord.append([int(numb),df.iloc[coord_df,0], df.iloc[coord_df,1]])
+
 
 coord = pd.DataFrame(coord)
 #print(coord.iloc[:,0])
@@ -35,15 +36,43 @@ plt.show()
 
 ###CLUSTERING
 kmeans = KMeans(init="random", n_init=10, max_iter=300, random_state=42, n_clusters=20)
-kmeans.fit(coord.iloc[:, 0:2])
-y_kmeans = kmeans.predict(coord.iloc[:, 0:2])
-plt.scatter(coord.iloc[:, 0], coord.iloc[:,1], c=y_kmeans)
+kmeans.fit(coord.iloc[:, 1:3])
+y_kmeans = kmeans.predict(coord.iloc[:, 1:3])
+plt.scatter(coord.iloc[:, 1], coord.iloc[:, 2], c=y_kmeans)
 centers = kmeans.cluster_centers_
 print(kmeans.cluster_centers_)
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
 
-#definition edit distance
+coord["label"] = y_kmeans
+print(coord[0])
+print(type(coord))
+
+###Créer tableau avec les séquences des labels
+
+ck = []
+string=[]
+
+for i in range(len(coord)-1):
+    if coord.iloc[i,0] == coord.iloc[i+1,0]:
+        string.append(coord.iloc[i,-1])
+    else:
+        ck.append(string)
+        string = []
+
+print(ck)
+
+
+
+###Supprimer les repetitions
+"""string=[]
+for i in range(len(coord["label"])):
+    if coord("label"[i]) = coord("label"[i+1]):"""
+
+
+
+
+#Definition edit distance
 def edit_distance(string1, string2):
 
     if len(string1) > len(string2):
@@ -64,4 +93,3 @@ def edit_distance(string1, string2):
     return difference
 
 #Retourner la difference minimale
-
