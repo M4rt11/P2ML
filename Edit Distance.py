@@ -41,3 +41,4 @@ data["Coord"] = coord #on crée un nouvel index coord dans la matrice data, on r
 
 kmeans = KMeans(init="random", n_init=10, max_iter=300, random_state=42)
 kmeans.fit(data["Coord"])
+
