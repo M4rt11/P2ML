@@ -43,3 +43,26 @@ print(kmeans.cluster_centers_)
 print(kmeans.labels_)
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
+
+#definition edit distance
+def edit_distance(string1, string2):
+
+    if len(string1) > len(string2):
+        difference = len(string1) - len(string2)
+        string1[:difference]
+
+    if len(string2) > len(string1):
+        difference = len(string2) - len(string1)
+        string2[:difference]
+
+    else:
+        difference = 0
+
+    for i in range(len(string1)):
+        if string[i] != string[i]:
+            difference += 1
+
+    return difference
+
+#Retourner la difference minimale
+
