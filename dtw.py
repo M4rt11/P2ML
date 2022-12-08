@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
 
+###Distance Time Warping ###
 
-def ecl(r, o):
+def ecl(r, o): #distance euclidienne formule
     """
     :param r: point reference A 2d point with x and y
     :param o: point observed A 2d point with x and y
@@ -10,7 +11,7 @@ def ecl(r, o):
     """
     return ((r[0] - o[0]) ** 2 + (r[1] - o[1]) ** 2) ** 0.5
 
-def dtw(r, o, w=2):
+def dtw(r, o, w=2): #
     """
     :param r: num of the reference signal's file => a 2 dimensions  x y vector
     :param o: nom of the observed signal's file => a 2 dimensions x y  vector
@@ -19,7 +20,7 @@ def dtw(r, o, w=2):
     """
 
     ## Creation of the cost matrix
-    cost_m = np.zeros((len(r), len(o)))  # Create the cost matrix
+    cost_m = np.zeros((len(r), len(o)))  # Create the cost matrix, prend le taille du r et du o
 
     for ir in range(len(r)):
         for io in range(len(o)):
