@@ -51,6 +51,8 @@ centers = kmeans.cluster_centers_
 print(kmeans.cluster_centers_)
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
+facet = sns.lmplot(data=data, x='x', y='y', hue='label',
+                   fit_reg=False, legend=True, legend_out=True)
 
 """           
 #coord = pd.Series(coord) #on dit que les coord sont égales à un dataframe
