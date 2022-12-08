@@ -116,7 +116,6 @@ coord_digit = df_user[df_user['Digit']==1]
 #print(coord_digit['Coord'])
 #print(coord_digit['Coord'].iloc[1])
 
-
 print(dtw(coord_digit['Coord'].iloc[1],coord_digit['Coord'].iloc[9]))
 
 
@@ -128,14 +127,14 @@ Train = data[data['UserID'] != 3]
 Test = data[data['UserID'] == 3]
 
 tik = time.perf_counter()
-for te in range(0,100):
+for te in range(0,100): #0 est l'user ID, 1 est le digit, 2 est les coord
     signal = Test.iloc[te, 2]
     #print(signal)
     result = []
     result_d = []
     for tr in range(0,900):
         r = Train.iloc[tr,2]
-        result.append(dtw(signal, r))
+        result.append(dtw(signal, r)) #r donne le résult
         result_d.append(Train.iloc[tr, 1])
 
     order = np.array(result_d)[np.argsort(np.array(result))][:k]
@@ -144,10 +143,8 @@ for te in range(0,100):
         print(f'True = {Test.iloc[te, 1]}  - Pred = {predicted}')
 
 
+print(result)
+
 
 
 print(f'Time to execute : {time.perf_counter()-tik:.3f} sec.')
-
-
-
-
