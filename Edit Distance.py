@@ -65,11 +65,21 @@ print(ck)
 
 
 ###Supprimer les repetitions
-"""string=[]
-for i in range(len(coord["label"])):
-    if coord("label"[i]) = coord("label"[i+1]):"""
+ck_new = []
+for i in range(len(ck)):
+    newstring=[]
+    for indice in range(len(ck[i])):
+        if indice == len(ck[i])-1:
+            newstring.append(ck[i][-1])
+            #print('finish')
+        elif ck[i][indice] != ck[i][indice+1]:
+            newstring.append(ck[i][indice])
+        elif ck[i][indice] == ck[i][indice+1]:
+               pass
+    ck_new.append(newstring)
 
-
+print(ck_new)
+print(type(ck_new))
 
 
 #Definition edit distance
