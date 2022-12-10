@@ -64,20 +64,23 @@ plt.show()
 
 ###CLUSTERING
 kmeans = KMeans(init="random", n_init=10, max_iter=300, random_state=42, n_clusters=20)
-kmeans.fit(coord.iloc[:, 1:3])
-y_kmeans = kmeans.predict(coord.iloc[:, 1:3])
-plt.scatter(coord.iloc[:, 1], coord.iloc[:, 2], c=y_kmeans)
+kmeans.fit(coord_train.iloc[:, 1:3])
+y_kmeans = kmeans.predict(coord_train.iloc[:, 1:3])
+plt.scatter(coord_train.iloc[:, 1], coord_train.iloc[:, 2], c=y_kmeans)
 centers = kmeans.cluster_centers_
 print(kmeans.cluster_centers_)
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
 
-coord["label"] = y_kmeans
-print(coord[0])
-print(type(coord))
+coord_train["label"] = y_kmeans
+### il faut attribuer les region du test en fonction des train, ici probleme :
+coord_test["label"] = y_kmeans
+print(coord_train[0])
+print(coord_test[0])
+#print(type(coord_train))
 
 ###Créer tableau avec les séquences des labels
-
+"""
 ck = []
 string = []
 
@@ -129,5 +132,5 @@ def edit_distance(stringtest, stringtrain):
 
 
 print(edit_distance(ck_new[0], ck_new[32]))
-
+"""
 # Retourner la difference minimale
