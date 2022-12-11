@@ -81,6 +81,7 @@ for i in range(len(ck)):
 print(ck_new)
 print(type(ck_new))
 
+
 """
 #Definition edit distance
 def edit_distance(stringtest, stringtrain):
@@ -89,7 +90,7 @@ def edit_distance(stringtest, stringtrain):
         difference = len(stringtest) - len(stringtrain)
         stringtest = stringtest[:difference]
 
-    if len(string) > len(stringtest):
+    if len(stringtrain) > len(stringtest):
         difference = len(stringtrain) - len(stringtest)
         stringtrain = stringtrain[:difference]
 

@@ -74,9 +74,10 @@ plt.show()
 
 coord_train["label"] = y_kmeans
 ### il faut attribuer les region du test en fonction des train, ici probleme :
-coord_test["label"] = y_kmeans
-print(coord_train[0])
-print(coord_test[0])
+#coord_test["label"] = y_kmeans
+print(coord_train)
+print(y_kmeans)
+#print(coord_test[0])
 #print(type(coord_train))
 
 ###Créer tableau avec les séquences des labels
