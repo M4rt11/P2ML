@@ -81,7 +81,7 @@ kmeans.fit(coord_train.iloc[:, 1:3])
 y_kmeans = kmeans.predict(coord_train.iloc[:, 1:3])
 plt.scatter(coord_train.iloc[:, 1], coord_train.iloc[:, 2], c=y_kmeans)
 centers = kmeans.cluster_centers_
-#print(kmeans.cluster_centers_)
+print(kmeans.cluster_centers_)
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
 
@@ -90,10 +90,15 @@ coord_train["label"] = y_kmeans
 #coord_test["label"] = y_kmeans
 
 
+
 ##renvoie les label de tt les coord du test en fct du kmeans fit avec le train
 #print(kmeans.predict(coord_test.iloc[:, 1:3]))
 coord_test["label"] = kmeans.predict(coord_test.iloc[:, 1:3])
 #print(coord_test)
+
+print(coord_train)
+print(y_kmeans)
+
 #print(coord_test[0])
 #print(type(coord_train))
 
