@@ -6,7 +6,10 @@ from scipy.ndimage import gaussian_filter1d
 from sklearn.preprocessing import StandardScaler
 
 
-
+def norm(v):
+    def norm(v):
+        v = (v - np.min(v)) / (np.max(v) - np.min(v))
+        return v
 
 ### DYNAMIC TIME WRAPPING METHOD
 def standarization(data):
@@ -53,7 +56,6 @@ def dtw(r, o, w=2, normal=False):
     :param normal: If True, the inputs vector are normalized btw 0 and 1
     :return: scalar = to the lowest cumulative difference between the two signals
     """
-
     ## Creation of the cost matrix
     cost_m = np.zeros((len(r), len(o)))  # Create the cost matrix
 

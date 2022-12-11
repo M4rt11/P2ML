@@ -14,7 +14,7 @@ def standarization(data):
     scaler = StandardScaler()
     data.iloc[:, 0:2] = scaler.fit_transform(data.iloc[:, 0:2]) #que le x, y, z et pas le t
     return data
-
+"""
 #CREATION DU TABLEAU
 
   # On crée une matrice de 0 (2 colonnes et 1000 lignes)
@@ -52,7 +52,7 @@ centers = kmeans.cluster_centers_
 print(kmeans.cluster_centers_)
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
-
+"""
 
 """           
 #coord = pd.Series(coord) #on dit que les coord sont égales à un dataframe
@@ -85,4 +85,13 @@ plt.scatter(0.0531858,  -0.0566656 , s=200, c='g', marker='s')
 plt.scatter(0.00407643,  0.04564843, s=200, c='r', marker='s')
 plt.show()
 """
+
+x = 5
+data = np.zeros((900, 2))
+for i in range(900):
+    if i != x:
+        data[i] = [int((i)// 100 + 1), int((i) // 10) % 10]
+data = pd.DataFrame(data, columns=['UserID', 'Digit'])
+
+print(data.iloc[511,1])
 
