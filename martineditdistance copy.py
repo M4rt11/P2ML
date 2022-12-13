@@ -179,10 +179,3 @@ for x in range(1, 11):
     total_accuracy += ok
 
 print('total = ', total_accuracy/1000)
-
-
-
-
-
-
-
