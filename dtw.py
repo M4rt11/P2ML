@@ -3,41 +3,33 @@ import numpy as np
 
 ###Distance Time Warping ###
 
-def ecl(r, o): #distance euclidienne formule
-    """
-    :param r: point reference A 2d point with x and y
-    :param o: point observed A 2d point with x and y
-    :return: Euclidean distance between te two points
-    """
-    return ((r[0] - o[0]) ** 2 + (r[1] - o[1]) ** 2) ** 0.5
+def ecl(train, test): #distance euclidienne formule
 
-def dtw(r, o, w=2): #
-    """
-    :param r: num of the reference signal's file => a 2 dimensions  x y vector
-    :param o: nom of the observed signal's file => a 2 dimensions x y  vector
-    :param w: weight for diagonal transition, in our project it's fixed to 2
-    :return: scalar = to the lowest cumulative difference between the two signals
-    """
+    return ((train[0] - test[0]) ** 2 + (train[1] - test[1]) ** 2) ** 0.5
+
+def dtw(train, test, w=2):
+
+    #w: weight for diagonal transition, we fixed to 2
 
     ## Creation of the cost matrix
-    cost_m = np.zeros((len(r), len(o)))  # Create the cost matrix, prend le taille du r et du o
+    cost_m = np.zeros((len(train), len(test)))  # Create the cost matrix, prend le taille du train et du test
 
-    for ir in range(len(r)):
-        for io in range(len(o)):
+    for itrain in range(len(train)): #algo qui vient des slides du cours
+        for itest in range(len(test)):
             # First: Origin
-            if io == ir == 0:
-                cost_m[0, 0] = ecl(r[ir], o[io])
+            if itest == itrain == 0:
+                cost_m[0, 0] = ecl(train[itrain], test[itest])
             # Then let's continue with the first row or first column
-            elif ir == 0:
-                cost_m[ir, io] = cost_m[ir, io - 1] + ecl(r[ir], o[io])
-            elif io == 0:
-                cost_m[ir, io] = cost_m[ir - 1, io] + ecl(r[ir], o[io])
+            elif itrain == 0:
+                cost_m[itrain, itest] = cost_m[itrain, itest - 1] + ecl(train[itrain], test[itest])
+            elif itest == 0:
+                cost_m[itrain, itest] = cost_m[itrain - 1, itest] + ecl(train[itrain], test[itest])
             # Finish with the rest of the matrix
             else:
-                cost_m[ir, io] = min(cost_m[ir - 1, io] + ecl(r[ir], o[io]),
-                                     cost_m[ir - 1, io - 1] + w * ecl(r[ir], o[io]),
-                                     cost_m[ir, io - 1] + ecl(r[ir], o[io]))
+                cost_m[itrain, itest] = min(cost_m[itrain - 1, itest] + ecl(train[itrain], test[itest]),
+                                     cost_m[itrain - 1, itest - 1] + w * ecl(train[itrain], test[itest]),
+                                     cost_m[itrain, itest - 1] + ecl(train[itrain], test[itest]))
 
-    return cost_m[len(r) - 1, len(o) - 1] / (len(r) + len(o))
+    return cost_m[len(train) - 1, len(test) - 1] / (len(train) + len(test)) #ca nous retourne le cout min entre les test et le train normalisé sur la longueur car le cout dépend aussi de la longueur
 
 

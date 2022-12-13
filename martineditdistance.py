@@ -34,7 +34,7 @@ for subject in range(1,11):
 coord_train = []
 coord_test = []
 ###Train
-
+x=5
 for subject in range(1, 11):
     for digit in range(10):
         for rep in range(1, 11):

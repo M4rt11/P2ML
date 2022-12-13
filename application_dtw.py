@@ -1,18 +1,15 @@
-### fdp jupyter###
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from dtw import dtw
 from scipy.ndimage import gaussian_filter1d
 from sklearn.preprocessing import StandardScaler
-
 from scipy import stats as st
-
 import os
-
 import time
 from tqdm import tqdm
+
+
 def standarization(data):
     scaler = StandardScaler()
     data.iloc[:, 0:2] = scaler.fit_transform(data.iloc[:, 0:2])
@@ -22,9 +19,9 @@ def standarization(data):
 
 for j in range(1,11):
     subject = 'Domain1_csv/Subject'+str(j)
-    print(subject)
+    #print(subject)
     for i in range(1, 11):
-        print(subject + '-5-' + str(i) + '.csv')
+        #print(subject + '-5-' + str(i) + '.csv')
         filename = subject + '-5-' + str(i) + '.csv'
         df = pd.read_csv(filename)
         df = standarization(df)
@@ -35,7 +32,7 @@ for j in range(1,11):
     subject = 'Domain1_csv/Subject'+str(j)
     #print(subject)
     for i in range(1, 5):
-        print(subject + '-5-' + str(i) + '.csv')
+        #print(subject + '-5-' + str(i) + '.csv')
         filename = subject + '-5-' + str(i) + '.csv'
         df = pd.read_csv(filename)
         df = standarization(df)
@@ -114,22 +111,21 @@ for subject in range(1,11):
 coord = pd.Series(coord)
 data["Coord"] = coord
 
-df_user = data[data["UserID"]==4]
-coord_digit = df_user[df_user['Digit']==1]
+#df_user = data[data["UserID"]==4]
+#coord_digit = df_user[df_user['Digit']==1]
 #print(coord_digit['Coord'])
 #print(coord_digit['Coord'].iloc[1])
 
-print(dtw(coord_digit['Coord'].iloc[1],coord_digit['Coord'].iloc[9]))
+#print(dtw(coord_digit['Coord'].iloc[1],coord_digit['Coord'].iloc[9]))
 
 
-tik = time.perf_counter()
 ###Cross validation ###
+tik = time.perf_counter()
 k = 15
 total = 0
 for x in range(1, 11):
     Train = data[data['UserID'] != x]
     Test = data[data['UserID'] == x]
-
 
     ok = 0
     for te in range(10,100): #0 est l'user ID, 1 est le digit, 2 est les coord
@@ -143,18 +139,20 @@ for x in range(1, 11):
             result_d.append(Train.iloc[tr, 1])
         #print(result)
         #print(result_d)
-        order = np.array(result_d)[np.argsort(np.array(result))][:k] #il va trier selon les 15 cout min entre le test et le train qu'il va trouver et les associer au chiffre reel au quel ils corrrespondes
+        order = np.array(result_d)[np.argsort(np.array(result))][:k] #il va trier selon les 15 couts min entre le test et le train. et les associer au chiffre du train auquels ils corrrespondent
         print(order)
-        predicted = st.mode(order)[0]
+        predicted = st.mode(order)[0] #nous sort la valeurs la plus représentée dans order
+        print(predicted)
         #if te % 10 == 0:
-        print(f'True = {Test.iloc[te, 1]}  - Pred = {predicted}')
+        #rint(f'True = {Test.iloc[te, 1]}  - Pred = {predicted}')
         if Test.iloc[te, 1] == predicted:
             ok +=1
     print(f'accuracy : for {x} ', ok/100)
-    total +=ok
+    total += ok
 
 print('accuracy total : ', total/1000)
 
 
 print(f'Time to execute : {time.perf_counter()-tik:.3f} sec.')
 
+###pt un probleme au niveau de la normalisation et il manque deux sequence, on en a 899 et 99 ?

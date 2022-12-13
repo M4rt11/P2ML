@@ -27,6 +27,7 @@ def sequences(coord):
         if coord.iloc[i, 0] == coord.iloc[i + 1, 0]: #si la sequence d'apres est tjrs = a la sequence d'avant
             string.append(coord.iloc[i, -1]) #on ajoute la sequence a une liste
         else:
+            string.append(coord.iloc[i, -1])
             ck.append(string)
             string = []
     return ck
@@ -102,12 +103,14 @@ for x in range(1, 11):
     print('train : ', coord_train)
 
 
+
 ###créeation tableau pour mettre les sequence en relation avec les bon chiffre
     data = np.zeros((900, 2))
     for i in range(900):
         if i != x:
             data[i] = [int((i)// 100 + 1), int((i) // 10) % 10]
     data_train = pd.DataFrame(data, columns=['UserID', 'Digit'])
+    print('data : ', data)
 
     data= np.zeros((100, 2))
     for i in range(100):
