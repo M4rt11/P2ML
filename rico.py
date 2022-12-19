@@ -84,7 +84,7 @@ print(ck_new)
 print(type(ck_new))
 
 
-"""
+
 #Definition edit distance
 def edit_distance(stringtest, stringtrain):
 
@@ -107,5 +107,5 @@ def edit_distance(stringtest, stringtrain):
 
 print(edit_distance(ck_new[0], ck_new[32]))
 
-"""
+
 #Retourner la difference minimale
