@@ -45,7 +45,7 @@ for j in range(1,11):
         plt.legend()
         plt.grid()
 plt.show()
-"""
+
 ##Matrix dtw
 
 for j in range(1, 11):
@@ -86,7 +86,7 @@ for j in range(1,11):
 
 
 
-"""
+
 data = np.zeros((1000, 2))
 for i in range(1000):
     data[i] = [ int((i) // 100 + 1), int((i) // 10) % 10]

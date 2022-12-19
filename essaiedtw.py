@@ -4,11 +4,13 @@ import pandas as pd
 import numpy as np
 from scipy.ndimage import gaussian_filter1d
 from sklearn.preprocessing import StandardScaler
+import statistics
 
 
 def norm(v):
     def norm(v):
-        v = (v - np.min(v)) / (np.max(v) - np.min(v))
+        #v = (v - np.min(v)) / (np.max(v) - np.min(v))
+        v = (v - statistics.mean(v)/ statistics.stdev(v))
         return v
 
 ### DYNAMIC TIME WRAPPING METHOD
