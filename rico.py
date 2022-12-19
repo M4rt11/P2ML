@@ -87,7 +87,7 @@ test = data[data["UserID"] == 10].reset_index()  # Last user = test user
 i = 0
 total = 0
 # Classification of test the digit
-for t in range(23, len(test)):
+for t in range(len(test)):
     print("t = ", t)
     pred_d = 99  # Initial value for digit prediction, should be changed anyway in the loop
     min_dtw = 999  # Initial value for min cumulated difference, should be changed anyway in the loop
@@ -109,15 +109,28 @@ for t in range(23, len(test)):
             pred_d = d  # We then predict the associated the digit
 
 
-
     total += 1
     print("True D: {0} - Pred D: {1}".format(test["Digit"][t], pred_d))
     if test["Digit"][t] == pred_d:
         i += 1
 print("accuracy :", i/total)
 
-""" RESULTS:
-+ Always correct except for 0 which is always wrong
-- Takes a lot of time because we have to compare every test digit with the 900 train digits.
+
+"""
+
+Faire matrice confusion
+
+1. edit dist et dtw mais avec classifier(regles, radnomfor,...) :
+    dist par rapport au train set
+    Kernel: transfo dist en produit scalaire et ensuite utilise regle bassée sur le Karnel
+    ensuite multi dimensional scaling (MDS)
+    Intégrer Kernel direct dans reglog
+2. 2 dimensionel
+    librairie, reconnaissance caract à partir d'image (deep learning, réseau neurones)
+    l'entraine (2D) et essaye de les catégoriser
+3. Utiliser reconnaisseur gestes classiques
+    articles Moodle
+    regarder code python de ces libr et les utiliser
+4.
 
 """
