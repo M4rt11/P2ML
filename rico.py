@@ -41,7 +41,7 @@ for subject in range(1,11):
             x5 = gaussian_filter1d(x, sigma=5)      # We filter the points
             y5 = gaussian_filter1d(y, sigma=5)
             z5 = gaussian_filter1d(z, sigma=5)
-            coord.append(np.array([x5, y5]))
+            coord.append(np.array([x, y]))
 coord = pd.Series(coord)            #We send the data onto a dataframe
 data["Coord"] = coord
 
@@ -117,7 +117,6 @@ print("accuracy :", i/total)
 
 
 """
-
 Faire matrice confusion
 
 1. edit dist et dtw mais avec classifier(regles, radnomfor,...) :
